@@ -1,6 +1,6 @@
 //
 //  ExportView.swift
-//  demtext
+//  ceyboard
 //
 //  Created by Simon Osterlehner on 25.01.22.
 //
@@ -17,6 +17,7 @@ struct ExportView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 32) {
                 VStack(alignment: .leading, spacing: 7) {
+                    // Export explainer text
                     Text("What will be exported?").font(.headline)
                     Text("When an export is created, it will contain general information like app version, device, gender, birthyear, and the study id.").foregroundColor(.gray)
                     Text("Likewise, the collected typing sessions including the app in which the keyboard was used, the start and end date, and the individual typing events consisting of the action performed (typed character, emoji, auto-complete, etc.) and the timestamp are exported.").foregroundColor(.gray)
@@ -40,6 +41,7 @@ struct ExportView: View {
         // Show a loading indicator
         loading = true
         
+        // Perform export generation in a background thread
         DispatchQueue.background(background: { () -> String? in
             do {
                 // Generate JSON
@@ -66,7 +68,7 @@ struct ExportView: View {
                 let encoder = JSONEncoder()
                 encoder.userInfo[Session.includeTextUserInfoKey] = self.includeText
                 
-                // Use the ISO date format instead of weird Apple unix timestamps which start in 2001
+                // Use the ISO date format instead of weird Apple unix timestamps which starts in 2001
                 encoder.dateEncodingStrategy = .millisecondsSince1970
                 
                 let jsonData = try encoder.encode(toExport)
@@ -92,6 +94,7 @@ struct ExportView: View {
                     //Setup share activity position on screen on bottom center
                     shareActivity.popoverPresentationController?.sourceRect = CGRect(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height, width: 0, height: 0)
                     shareActivity.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
+                    // Open the share activity
                     vc.present(shareActivity, animated: true, completion: nil)
                 }
             }

@@ -1,6 +1,6 @@
 //
 //  SettingsView.swift
-//  demtext
+//  ceyboard
 //
 //  Created by Simon Osterlehner on 14.02.22.
 //
@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
+    // Fetch settings stored in user defaults
     @AppStorage("useUmlaute", store: UserDefaults(suiteName: SuiteName.name)) var useUmlaute = false
     @AppStorage("useAutocorrect", store: UserDefaults(suiteName: SuiteName.name)) var useAutocorrect = false
     @AppStorage("profile.gender", store: UserDefaults(suiteName: SuiteName.name)) var profileGender = ""
@@ -18,6 +19,7 @@ struct SettingsView: View {
         NavigationView {
             Form {
                 Section(header: Text("Personal information")) {
+                    // Gender picker
                     Picker(
                         selection: $profileGender,
                         label: Text("Gender")
@@ -26,15 +28,18 @@ struct SettingsView: View {
                             Text($0).tag($0.lowercased())
                         }
                     }
+                    // Year of birth
                     YearPicker(label: "Year of birth", selection: $profileBirthyear)
                 }
                 
                 Section(header: Text("Study identifier")) {
+                    // Study ID
                     TextField("Study-ID", text: $studyId)
                         .keyboardType(.numberPad)
                 }
                 
                 Section(header: Text("Keyboard behavior and layout")) {
+                    // Keyboard settings like umlauts and autocorrection
                     Toggle(isOn: $useUmlaute) {
                         Text("Use umlauts")
                     }
@@ -44,12 +49,14 @@ struct SettingsView: View {
                 }
                 
                 Section(header: Text("Export")) {
+                    // Export data option
                     NavigationLink(destination: ExportView()) {
                         Text("Export")
                     }
                 }
                 
                 Section(header: Text("FAQ")) {
+                    // FAQ
                     NavigationLink(destination: {
                         ScrollView {
                             VStack(alignment: .leading, spacing: 7) {

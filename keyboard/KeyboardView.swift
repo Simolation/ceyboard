@@ -72,7 +72,7 @@ private extension KeyboardView {
     
     var systemKeyboardStack: some View {
         VStack(spacing: 0) {
-            DemoAutocompleteToolbar()
+            CeyboardAutocompleteToolbar()
             if addTextFieldAboveKeyboard {
                 textField
             }

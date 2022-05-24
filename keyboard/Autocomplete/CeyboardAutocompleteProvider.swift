@@ -1,5 +1,5 @@
 //
-//  DemtextAutocompleteProvider.swift
+//  CeyboardAutocompleteProvider.swift
 //  keyboard
 //
 //  Created by Simon Osterlehner on 11.11.21.
@@ -10,9 +10,9 @@ import UIKit
 import Foundation
 import KeyboardKit
 
-class CustomAutocompleteProvider: AutocompleteProvider {
+class CeyboardAutocompleteProvider: AutocompleteProvider {
     var locale: Locale = .current
-    
+    // Provide required overwrites
     var canIgnoreWords: Bool { false }
     var canLearnWords: Bool { false }
     var ignoredWords: [String] = []
@@ -25,13 +25,16 @@ class CustomAutocompleteProvider: AutocompleteProvider {
     func removeIgnoredWord(_ word: String) {}
     func unlearnWord(_ word: String) {}
     
+    /**
+     Generate autocomplete suggestions for the currently typed text
+     */
     func autocompleteSuggestions(for text: String, completion: @escaping AutocompleteCompletion) {
         // When there is no text do not generate suggestions
         guard text.count > 0 else { return completion(.success([])) }
         
         // Run autocorrect suggestions in a background thread
         DispatchQueue.background(background: {
-            return CustomAutocompleteProvider.suggestions(for: text, languageCode: self.locale.languageCode ?? "de_DE")
+            return CeyboardAutocompleteProvider.suggestions(for: text, languageCode: self.locale.languageCode ?? "de_DE")
         }, completion: { suggestions in
             
             // Return the suggestions
@@ -40,17 +43,22 @@ class CustomAutocompleteProvider: AutocompleteProvider {
     }
 }
 
-private extension CustomAutocompleteProvider {
+private extension CeyboardAutocompleteProvider {
     
+    /**
+     Generate suggestions
+     */
     static func suggestions(for text: String, languageCode: String) -> [AutocompleteSuggestion] {
+        // Load user defaults to determine whether autocorrection is enabled or not
         let userDefaults = UserDefaults(suiteName: SuiteName.name)!
         let useAutocorrect = userDefaults.bool(forKey: "useAutocorrect")
         
-        
         var result: [AutocompleteSuggestion] = []
         
+        // Generate guesses for text corrections
         let guesses = self.spellCheck(for: text, autoApply: useAutocorrect, languageCode: languageCode)
         
+        // The first result should always be the actual typed text as otherwise it is impossible to type unknown words
         if !guesses.isEmpty && useAutocorrect {
             result.append(suggestion(text,title: "\"\(text)\""))
         }
@@ -59,7 +67,7 @@ private extension CustomAutocompleteProvider {
             result.append(guess)
         }
         
-        
+        // Only show a maximum of 3 results
         if result.count < 3 {
             // Only add suggestions when the guesses are less than three
             let checker = UITextChecker()
@@ -76,6 +84,9 @@ private extension CustomAutocompleteProvider {
         return result
     }
     
+    /**
+     Perform spellcheck checker and generate suggestions
+     */
     static func spellCheck(for text: String, autoApply: Bool = false, languageCode: String) -> [AutocompleteSuggestion] {
         let checker = UITextChecker()
         
@@ -87,6 +98,7 @@ private extension CustomAutocompleteProvider {
         var result: [AutocompleteSuggestion] = []
         
         if misspelledRange.location != NSNotFound {
+            // Get guesses for corrected words
             let guesses = checker.guesses(forWordRange: misspelledRange, in: text, language: languageCode)
             
             let shown_guesses = guesses?.prefix(3) ?? []
@@ -104,6 +116,9 @@ private extension CustomAutocompleteProvider {
         return result
     }
     
+    /**
+     Helper function to build AutocompleteSuggestion items
+     */
     static func suggestion(_ word: String, _ subtitle: String? = nil, isAutocomplete: Bool = false, title: String? = nil) -> AutocompleteSuggestion {
         StandardAutocompleteSuggestion(text: word, title: title ?? word, isAutocomplete: isAutocomplete, isUnknown: false, subtitle: subtitle)
     }

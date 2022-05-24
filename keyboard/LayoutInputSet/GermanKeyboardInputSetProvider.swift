@@ -1,5 +1,5 @@
 //
-//  GermanKeyboardInputSetProvider.swift.swift
+//  GermanKeyboardInputSetProvider.swift
 //  keyboard
 //
 //  Created by Simon Osterlehner on 11.11.21.
@@ -34,6 +34,7 @@ class GermanKeyboardInputSetProvider: DeviceSpecificInputSetProvider, LocalizedS
         let useUmlaute = userDefaults.bool(forKey: "useUmlaute")
         
         if useUmlaute {
+            // Provide umlaute (QWERTZ T1)
             return AlphabeticInputSet(rows: [
                 row("qwertzuiopü"),
                 row("asdfghjklöä"),
@@ -41,6 +42,7 @@ class GermanKeyboardInputSetProvider: DeviceSpecificInputSetProvider, LocalizedS
             ])
             
         } else {
+            // Regular QWERTZ layout
             return AlphabeticInputSet(rows: [
                 row("qwertzuiop"),
                 row("asdfghjkl"),

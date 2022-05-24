@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  demtext
+//  ceyboard
 //
 //  Created by Simon Osterlehner on 03.11.21.
 //
@@ -26,6 +26,7 @@ struct ContentView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
+            // Show the different onboarding steps
             if !onboardingLanding {
                 LaunchPageOneView(nextPage: {
                     onboardingLanding.toggle()
@@ -39,16 +40,19 @@ struct ContentView: View {
             } else if !onboardingKeyboardSelected {
                 LaunchPageFourView()
             } else {
-                // Show main Content
+                // Show main content as a tab view
                 TabView(selection: $tabSelection) {
+                    // Home View with welcome text and explanation
                     HomeView(tabSelection: $tabSelection).tabItem {
                         Image(systemName: "house")
                         Text("Home")
                     }.tag(1)
+                    // List all sessions
                     SessionListView().tabItem {
                         Image(systemName: "list.bullet.rectangle.portrait.fill")
                         Text("Sessions")
                     }.tag(2)
+                    // Configure the application
                     SettingsView().tabItem {
                         Image(systemName: "gear")
                         Text("Settings")
@@ -58,10 +62,16 @@ struct ContentView: View {
         }
     }
     
+    /**
+     Whether the keyboard is enabled in the settings
+     */
     var keyboardEnabled: Bool {
         keyboardState.isKeyboardEnabled && keyboardState.isFullAccessEnabled
     }
     
+    /**
+     Whether the keyboard is selected as active keyboard
+     */
     var keyboardActive: Bool {
         keyboardState.isKeyboardCurrentlyActive
     }

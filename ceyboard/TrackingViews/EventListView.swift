@@ -1,6 +1,6 @@
 //
 //  EventListView.swift
-//  demtext
+//  ceyboard
 //
 //  Created by Simon Osterlehner on 22.12.21.
 //
@@ -18,6 +18,7 @@ struct EventListView: View {
     init(with session: Session) {
         self.session = session
         
+        // Fetch the session events for the selected session
         _events = FetchRequest<SessionEvent>(
             entity: SessionEvent.entity(),
             sortDescriptors: [
@@ -44,6 +45,9 @@ struct EventListView: View {
         }
     }
     
+    /**
+     Format the event to print out the value
+     */
     private func formatEvent(event: SessionEvent) -> String {
         switch event.action {
         case "autocorrect":

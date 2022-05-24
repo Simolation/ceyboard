@@ -1,12 +1,15 @@
 //
 //  BundleExtension.swift
-//  demtext
+//  ceyboard
 //
 //  Created by Simon Osterlehner on 16.02.22.
 //
 
 import Foundation
 
+/**
+ Get information about the current application version
+ */
 extension Bundle {
     var releaseVersionNumber: String? {
         return infoDictionary?["CFBundleShortVersionString"] as? String

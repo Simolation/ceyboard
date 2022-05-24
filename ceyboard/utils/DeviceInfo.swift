@@ -1,6 +1,6 @@
 //
 //  DeviceInfo.swift
-//  demtext
+//  ceyboard
 //
 //  Created by Simon Osterlehner on 15.02.22.
 //
@@ -8,6 +8,9 @@
 import Foundation
 
 public struct DeviceInfo {
+    /**
+     Return the device version
+     */
     static var unameMachine: String {
         var utsnameInstance = utsname()
         uname(&utsnameInstance)

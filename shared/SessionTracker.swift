@@ -1,6 +1,6 @@
 //
 //  SessionTracker.swift
-//  demtext
+//  ceyboard
 //
 //  Created by Constantin Ehmanns on 29.11.21.
 //
@@ -30,7 +30,6 @@ class SessionTracker {
     var hasMovedCursorSignificantly = false
     var backspaceLongPressed = false
     
-    var timer = Timer()
     // intialize in actionHandler after PersitenceController
     public init() {
         self.viewContext = PersistenceController.shared.container.viewContext
@@ -50,12 +49,14 @@ class SessionTracker {
         }
     }
     
+    /**
+     Create a new session and save previous session
+     */
     public func handleSession() {
         // If there is a session with events store the items
         if (self.currentSession?.events.count ?? 0) > 0 {
             // add current paragraph
             addReturn()
-            // print("Full Document: \(self.completeTextBeforeReturn.joined(separator: "\n"))")
             
             // Finalize current session
             self.currentSession?.ended_at = Date()
@@ -76,20 +77,27 @@ class SessionTracker {
         self.currentSession = SessionDto(hostApp: SessionTracker.hostBundle)
     }
     
+    /**
+     Whether the text field is empty or not
+     */
     func textFieldIsEmpty() -> Bool {
         let textBefore = self.keyboardContext?.textDocumentProxy.documentContextBeforeInput
         let textAfter = self.keyboardContext?.textDocumentProxy.documentContextAfterInput
         // overwriting with empty string after has been cleared
         
-        // self.writeCompleteText()
-        
         return (textBefore == "" && textAfter == "") || self.textFieldGone()
     }
     
+    /**
+     Check if the text field is gone
+     */
     func textFieldGone() -> Bool {
         ((self.keyboardContext?.textDocumentProxy.documentContextBeforeInput == nil) && (self.keyboardContext?.textDocumentProxy.documentContextAfterInput == nil))
     }
     
+    /**
+     Get the entire typed text from the text field
+     */
     func writeCompleteText() {
         let textBefore = self.keyboardContext?.textDocumentProxy.documentContextBeforeInput
         let textAfter = self.keyboardContext?.textDocumentProxy.documentContextAfterInput
@@ -99,12 +107,14 @@ class SessionTracker {
             if text.count + 1 >= self.charCounter {
                 self.completeText = text
             } else if !self.backspaceLongPressed {
-                // print("Recording stopped. Text is: \(text) and charCounter is: \(self.charCounter)")
                 self.hasMovedCursorSignificantly = true
             }
         }
     }
     
+    /**
+     Get the length of the typed text
+     */
     func computeTextLength() -> Int {
         let textBefore = self.keyboardContext?.textDocumentProxy.documentContextBeforeInput
         let textAfter = self.keyboardContext?.textDocumentProxy.documentContextAfterInput
@@ -117,6 +127,9 @@ class SessionTracker {
         }
     }
     
+    /**
+     Track a new event and add it to the session list
+     */
     func trackEvent(action: String, value: String?, originalValue: String? = nil) {
         // the user has definitely started doing something
         self.hasStarted = true
@@ -141,7 +154,6 @@ class SessionTracker {
     }
     
     func addReturn() {
-        // print("Added: \(self.completeText)")
         self.completeTextBeforeReturn.append(self.completeText)
         self.completeText = ""
         self.charCounter = 0
@@ -159,6 +171,9 @@ class SessionTracker {
         self.backspaceLongPressed = true
     }
     
+    /**
+     Persist local sessions to the database
+     */
     func writeToDb() {
         // loop through property DTOs and store in viewContext
         guard let currentSession = self.currentSession else {

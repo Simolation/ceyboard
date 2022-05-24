@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21D62" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Session" representedClassName="Session" syncable="YES" codeGenerationType="class">
         <attribute name="ended_at" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="fullText" optional="YES" attributeType="String"/>
         <attribute name="hostApp" optional="YES" attributeType="String"/>
         <attribute name="started_at" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="events" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="SessionEvent" inverseName="session" inverseEntity="SessionEvent"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SessionEvent" inverseName="session" inverseEntity="SessionEvent"/>
     </entity>
     <entity name="SessionEvent" representedClassName="SessionEvent" syncable="YES" codeGenerationType="class">
         <attribute name="action" attributeType="String"/>
         <attribute name="created_at" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="originalValue" optional="YES" attributeType="String"/>
         <attribute name="value" optional="YES" attributeType="String"/>
-        <relationship name="session" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Session" inverseName="events" inverseEntity="Session"/>
+        <relationship name="session" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Session" inverseName="events" inverseEntity="Session"/>
     </entity>
     <elements>
         <element name="Session" positionX="-63" positionY="-18" width="128" height="104"/>

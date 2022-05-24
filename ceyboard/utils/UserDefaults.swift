@@ -1,12 +1,15 @@
 //
 //  UserDefaults.swift
-//  demtext
+//  ceyboard
 //
 //  Created by Simon Osterlehner on 14.02.22.
 //
 
 import Foundation
 
+/**
+ Extend the UserDefault to support Date as data
+ */
 extension Date: RawRepresentable {
     private static let formatter = ISO8601DateFormatter()
     

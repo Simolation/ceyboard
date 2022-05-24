@@ -1,6 +1,6 @@
 //
 //  SessionDto.swift
-//  demtext
+//  ceyboard
 //
 //  Created by Simon Osterlehner on 18.12.21.
 //
@@ -13,7 +13,7 @@ public class SessionDto {
     var hostApp: String?
     var events: [SessionEventDto] = []
     var fullText: String?
-
+    
     
     init(hostApp: String?) {
         self.hostApp = hostApp
@@ -26,11 +26,15 @@ public class SessionDto {
 
 extension Session: Encodable {
     private enum CodingKeys: String, CodingKey { case started_at, ended_at, hostApp, events, fullText, words, sentences, avg_text_length, localRepetitions, intraSessionRepetitions }
-
+    
     public static var includeTextUserInfoKey: CodingUserInfoKey {
         return CodingUserInfoKey(rawValue: "includeText")!
     }
-
+    
+    /**
+     Handle the encoding for the session export
+     Automatically purging the fullText of the session
+     */
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         

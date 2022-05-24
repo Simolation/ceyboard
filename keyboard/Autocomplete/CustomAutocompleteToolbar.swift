@@ -1,5 +1,5 @@
 //
-//  DemtextAutocompleteToolbar.swift
+//  CustomAutocompleteToolbar.swift
 //  keyboard
 //
 //  Created by Constantin Ehmanns on 06.12.21.
@@ -14,12 +14,12 @@ public struct CustomAutocompleteToolbar: View {
      Create an autocomplete toolbar.
      
      - Parameters:
-       - suggestions: A list of suggestions to display in the toolbar.
-       - locale: The locale to apply to the toolbar.
-       - style: The style to apply to the toolbar, by default `.standard`.
-       - itemBuilder: An optional, custom item builder. By default, the static `standardItem` will be used.
-       - separatorBuilder: An optional, custom separator builder. By default, the static `standardSeparator` will be used.
-       - replacementAction: An optional, custom replacement action. By default, the static `standardReplacementAction` will be used.
+     - suggestions: A list of suggestions to display in the toolbar.
+     - locale: The locale to apply to the toolbar.
+     - style: The style to apply to the toolbar, by default `.standard`.
+     - itemBuilder: An optional, custom item builder. By default, the static `standardItem` will be used.
+     - separatorBuilder: An optional, custom separator builder. By default, the static `standardSeparator` will be used.
+     - replacementAction: An optional, custom replacement action. By default, the static `standardReplacementAction` will be used.
      */
     public init(
         suggestions: [AutocompleteSuggestion],
@@ -28,13 +28,13 @@ public struct CustomAutocompleteToolbar: View {
         itemBuilder: @escaping ItemBuilder = Self.standardItem,
         separatorBuilder: @escaping SeparatorBuilder = Self.standardSeparator,
         replacementAction: @escaping ReplacementAction = Self.standardReplacementAction) {
-        self.items = suggestions.map { BarItem($0) }
-        self.itemBuilder = itemBuilder
-        self.locale = locale
-        self.style = style
-        self.separatorBuilder = separatorBuilder
-        self.replacementAction = replacementAction
-    }
+            self.items = suggestions.map { BarItem($0) }
+            self.itemBuilder = itemBuilder
+            self.locale = locale
+            self.style = style
+            self.separatorBuilder = separatorBuilder
+            self.replacementAction = replacementAction
+        }
     
     private let items: [BarItem]
     private let locale: Locale
@@ -97,19 +97,19 @@ public extension CustomAutocompleteToolbar {
         for suggestion: AutocompleteSuggestion,
         locale: Locale,
         style: AutocompleteToolbarStyle) -> AnyView {
-        AnyView(AutocompleteToolbarItem(
-            suggestion: suggestion,
-            style: style.item,
-            locale: locale)
-        )
-    }
+            AnyView(AutocompleteToolbarItem(
+                suggestion: suggestion,
+                style: style.item,
+                locale: locale)
+            )
+        }
     
     /**
      This is the default action that will be used to trigger
      a text replacement when a `suggestion` is tapped.
      */
     static func standardReplacementAction(for suggestion: AutocompleteSuggestion) {
-        let actionHandler: DemtextKeyboardActionHandler = KeyboardInputViewController.shared.keyboardActionHandler as! DemtextKeyboardActionHandler
+        let actionHandler: CeyboardKeyboardActionHandler = KeyboardInputViewController.shared.keyboardActionHandler as! CeyboardKeyboardActionHandler
         actionHandler.tryReplaceSuggestions(for: suggestion)
     }
     
@@ -120,9 +120,9 @@ public extension CustomAutocompleteToolbar {
     static func standardSeparator(
         for suggestion: AutocompleteSuggestion,
         style: AutocompleteToolbarStyle) -> AnyView {
-        AnyView(AutocompleteToolbarSeparator(
-            style: style.separator))
-    }
+            AnyView(AutocompleteToolbarSeparator(
+                style: style.separator))
+        }
 }
 
 private extension CustomAutocompleteToolbar {

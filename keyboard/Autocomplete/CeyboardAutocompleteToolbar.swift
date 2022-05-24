@@ -1,5 +1,5 @@
 //
-//  DemoAutocompleteToolbar.swift
+//  CeyboardAutocompleteToolbar.swift
 //  keyboard
 //
 //  Created by Constantin Ehmanns on 11.11.21.
@@ -10,18 +10,16 @@ import SwiftUI
 import KeyboardKit
 
 /**
- This demo-specific toolbar always applies a height to avoid
- that the keyboard resizes when it gets suggestions and when
- it's empty. It also presents any subtitles as footnote text.
+ Customized Autocomplete Toolbar which adds a small purple dot to the left side
  */
-struct DemoAutocompleteToolbar: View {
+struct CeyboardAutocompleteToolbar: View {
     
     @EnvironmentObject private var context: AutocompleteContext
     @EnvironmentObject private var keyboardContext: KeyboardContext
     
     var body: some View {
         HStack(alignment: .center) {
-            // Add keybaord indicator
+            // Add keyboard indicator
             Circle()
                 .fill(Color("AccentColor"))
                 .frame(width: 7, height: 7)
@@ -31,7 +29,7 @@ struct DemoAutocompleteToolbar: View {
             CustomAutocompleteToolbar(
                 suggestions: context.suggestions,
                 locale: keyboardContext.locale)
-                .frame(height: 50)
+            .frame(height: 50)
             Spacer()
         }
     }
@@ -39,6 +37,6 @@ struct DemoAutocompleteToolbar: View {
 
 struct DemoAutocompleteToolbar_Previews: PreviewProvider {
     static var previews: some View {
-        DemoAutocompleteToolbar()
+        CeyboardAutocompleteToolbar()
     }
 }

@@ -1,6 +1,6 @@
 //
 //  EventDto.swift
-//  demtext
+//  ceyboard
 //
 //  Created by Simon Osterlehner on 18.12.21.
 //
@@ -26,7 +26,11 @@ public class SessionEventDto {
 
 extension SessionEvent: Encodable {
     private enum CodingKeys: String, CodingKey { case created_at, action, value, originalValue }
-
+    
+    /**
+     Handle the encoding for the event export
+     Automatically purge the value and originalValue fields
+     */
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(created_at, forKey: .created_at)

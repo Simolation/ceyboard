@@ -20,6 +20,7 @@ struct SessionListView: View {
             List {
                 ForEach(sessions) { session in
                     NavigationLink {
+                        // Navigate to the session event list
                         EventListView(with: session)
                     } label: {
                         if let fullText = session.fullText {
@@ -45,6 +46,9 @@ struct SessionListView: View {
         }
     }
     
+    /**
+     Delete a session
+     */
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             offsets.map { sessions[$0] }.forEach(viewContext.delete)

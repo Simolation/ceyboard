@@ -18,25 +18,15 @@ class KeyboardViewController: KeyboardInputViewController {
     
     override func viewDidLoad() {
         
-        // Uncomment this line to customize when to use dark
-        // appearance colors.
-        // Color.darkAppearanceStrategy = { _ in false }
-        
-        // Use demtext autocomplete
-        autocompleteProvider = CustomAutocompleteProvider()
-        
-        // Setup a demo-specific apearance
-        // 💡 You can play around with the DemoAppearance
-        // keyboardAppearance = DemoAppearance(context: keyboardContext)
+        // Use ceyboard autocomplete
+        autocompleteProvider = CeyboardAutocompleteProvider()
         
         // Use german locale
         keyboardContext.locale = KeyboardLocale.german.locale
-        
-        // Use german locale
         keyboardContext.locales = [KeyboardLocale.german.locale]
         
-        // demtext action handler
-        keyboardActionHandler = DemtextKeyboardActionHandler(
+        // ceyboard action handler
+        keyboardActionHandler = CeyboardKeyboardActionHandler(
             inputViewController: self)
         
         // Use German keyboard layout
@@ -49,13 +39,7 @@ class KeyboardViewController: KeyboardInputViewController {
             inputSetProvider: inputSetProvider,
             dictationReplacement: .keyboardType(.emojis))
         
-        // Setup a secondary callout action provider
-        // 💡 This is already done and just here to show how
-        // 💡 This is overwritten if Pro is registered below
-        /* keyboardSecondaryCalloutActionProvider = StandardSecondaryCalloutActionProvider(
-         context: keyboardContext,
-         providers: [try? EnglishSecondaryCalloutActionProvider()].compactMap { $0 }) */
-        
+        // Provide the current host bundle id to the session tracker
         SessionTracker.hostBundle = activeAppBundleId
         
         // Perform the base initialization
@@ -83,21 +67,8 @@ class KeyboardViewController: KeyboardInputViewController {
     // MARK: - Autocomplete
     
     /**
-     Override this function to add custom autocomplete logic
-     to your keyboard extension.
+     Detect upcoming change of the text field to store the entire typed text
      */
-    override func performAutocomplete() {
-        super.performAutocomplete()
-    }
-    
-    /**
-     Override this function to add custom autocomplete reset
-     logic to your keyboard extension.
-     */
-    override func resetAutocomplete() {
-        super.resetAutocomplete()
-    }
-    
     override func textWillChange(_ textInput: UITextInput?) {
         // Get the full text of the field before the input chaged
         SessionTracker.shared.writeCompleteText()
@@ -105,6 +76,10 @@ class KeyboardViewController: KeyboardInputViewController {
         super.textWillChange(textInput)
     }
     
+    /**
+     End a session when the input filed has been cleared.
+     Needed for messenger like WhatsApp etc which clear the input field after sending
+     */
     override func textDidChange(_ textInput: UITextInput?) {
         // Check if the input has been cleared and store the session
         SessionTracker.shared.handleSessionIfTextFieldIsEmpty()
