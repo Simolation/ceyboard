@@ -2,7 +2,7 @@
 
 c(ognition k)eyboard to record typing metrics on an iOS device
 
-![Insert graphic here]()
+![Slide 16_9 - 1](https://user-images.githubusercontent.com/4338202/170876325-784f6db0-c977-48f4-81d2-df5253a48d45.png)
 
 <p align="center">
 <img src="https://img.shields.io/cocoapods/p/ios" alt="Platform" />
@@ -10,7 +10,8 @@ c(ognition k)eyboard to record typing metrics on an iOS device
 <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License" />
 </p>
 
-This repository is the official implementation of [Insert link to Paper]().
+This repository is the official implementation of [Insert link to Paper](). 
+Details on how to cite the paper can be found in the GitHub repo under "Cite this repository".
 
 ## Requirements and Setup
 
@@ -56,7 +57,7 @@ The app is structured into three main compartments:
 3. `/shared/`
    The shared folder contains components which are accessible by both the main app and the keyboard. The shared access is realized over an App Group.
 
-![Insert graphic here]()
+![App Architecture](https://user-images.githubusercontent.com/4338202/170876978-05f33513-f03a-4047-8ffa-e32282aaf058.png)
 
 The shared package primarily contains the `CoreData` database and the [`SessionTracker`](/shared/SessionTracker.swift), which tracks the performed events on the keyboard and stores them securely on the device's local database.
 
