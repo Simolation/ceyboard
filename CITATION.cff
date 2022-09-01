@@ -1,12 +1,20 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 authors:
+  - family-names: "Kapsecker"
+    given-names: "Maximilian"
+    orcid: "https://orcid.org/0000-0002-3907-0749"
   - family-names: "Osterlehner"
     given-names: "Simon"
     orcid: "https://orcid.org/0000-0002-7801-6243"
+  - family-names: "Jonas"
+    given-names: "Stephan"
+    orcid: "https://orcid.org/0000-0002-3687-6165"
   - family-names: "Ehmanns"
     given-names: "Constantin"
-title: "ceyboard: cognitive iOS keyboard"
+title: "Analysis of Mobile Typing Characteristics in the Light of Cognition"
 version: 1.0.0
-date-released: 2022-03-15
+doi: 10.1109/ICDH55609.2022.00022
+date-released: 2022-07-01
 url: "https://github.com/Simolation/ceyboard"
+journal: "2022 IEEE International Conference on Digital Health (ICDH)"
