@@ -10,7 +10,7 @@ c(ognition k)eyboard to record typing metrics on an iOS device
 <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License" />
 </p>
 
-This repository is the official implementation of [Insert link to Paper](). 
+This repository is the official implementation of [Analysis of Mobile Typing Characteristics in the Light of Cognition](https://ieeexplore.ieee.org/document/9861089). 
 Details on how to cite the paper can be found in the GitHub repo under "Cite this repository".
 
 ## Requirements and Setup
